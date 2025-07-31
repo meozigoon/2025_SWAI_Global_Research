@@ -1,25 +1,24 @@
-```mermaid
 %%{init: { "flowchart": { "rankDir": "TB", "nodeSpacing": 12, "rankSpacing": 30 } }}%%
 flowchart TB
-    %% ---------- Basic Nodes ----------
-    Start["Power ON / Reset"]
-    Setup["setup() execution"]
-    A1["Serial.begin(9600)"]
-    A2["IrReceiver.begin(recvPin)"]
-    A3["pinMode(12, OUTPUT)<br/>pinMode(13, OUTPUT)"]
-    A4["MR.begin()<br/>ML.begin()"]
-    A5["srv.attach(8)<br/>srv.write(0)"]
-    Loop{{"loop() repeat"}}
-    CheckIR{"IrReceiver.decode()?"}
-    ReadIR["Read decodedRawData"]
-    TogglePower{"Power button?<br/>0xBA45FF00"}
-    TP["Toggle isOn value"]
-    AfterPower["Next step"]
-    IsOn{"isOn == true?"}
-    LEDoff["digitalWrite(12, LOW)"]
-    LEDon["digitalWrite(12, HIGH)"]
-    Switch{{"switch(decodedRawData)"}}
-    Resume["IrReceiver.resume()"]
+%% ---------- Basic Nodes ----------
+Start["Power ON / Reset"]
+Setup["setup() execution"]
+A1["Serial.begin(9600)"]
+A2["IrReceiver.begin(recvPin)"]
+A3["pinMode(12, OUTPUT)<br/>pinMode(13, OUTPUT)"]
+A4["MR.begin()<br/>ML.begin()"]
+A5["srv.attach(8)<br/>srv.write(0)"]
+Loop{{"loop() repeat"}}
+CheckIR{"IrReceiver.decode()?"}
+ReadIR["Read decodedRawData"]
+TogglePower{"Power button?<br/>0xBA45FF00"}
+TP["Toggle isOn value"]
+AfterPower["Next step"]
+IsOn{"isOn == true?"}
+LEDoff["digitalWrite(12, LOW)"]
+LEDon["digitalWrite(12, HIGH)"]
+Switch{{"switch(decodedRawData)"}}
+Resume["IrReceiver.resume()"]
 
     %% ---------- Command Handling ----------
     subgraph Commands["Command Handling"]
@@ -66,4 +65,3 @@ flowchart TB
     Default --> Resume
 
     Resume --> Loop
-```
