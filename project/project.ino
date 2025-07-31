@@ -48,7 +48,7 @@ class Motor
 Motor MR(4, 5, 9), ML(6, 7, 10); // Right Motor, Left Motor
 bool isOn = false; // Check Power
 
-void ultraSonic() // Ultra-Sonic Sensor distance check
+int ultraSonic() // Ultra-Sonic Sensor distance check
 {
   // Send signal
   digitalWrite(trigPin, LOW);
@@ -61,16 +61,22 @@ void ultraSonic() // Ultra-Sonic Sensor distance check
   long duration = pulseIn(echoPin, HIGH);
   int distance = duration * 0.034 / 2;
   Serial.println(distance);
+
   if (distance <= 15)
     srv.write(130); // open DRS using Servo Motors
   else
     srv.write(0); // close DRS
+  delay(5);
+  return distance;
 }
 
 void setup()
 {
   Serial.begin(9600);
   IrReceiver.begin(recvPin, ENABLE_LED_FEEDBACK);
+  pinMode(recvPin, INPUT);
+  pinMode(echoPin, INPUT);
+  pinMode(trigPin, OUTPUT);
   pinMode(12, OUTPUT);
   pinMode(13, OUTPUT);
   MR.begin();
@@ -81,7 +87,7 @@ void setup()
 
 void loop()
 {
-  //ultraSonic();
+  int distance = ultraSonic();
   if (IrReceiver.decode())
   {
     // Serial.println(IrReceiver.decodedIRData.decodedRawData, HEX); // remote HEX code
@@ -118,7 +124,8 @@ void loop()
         MR.stop();
         ML.moveForward(255);
         break;
-
+      
+      /*
       case 0xE619FF00: // EQ, for debug
         srv.write(130);
         digitalWrite(13, HIGH);
@@ -128,6 +135,7 @@ void loop()
         srv.write(0);
         digitalWrite(13, LOW);
         break;
+      */
 
       default:
         break;
