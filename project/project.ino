@@ -13,7 +13,7 @@ class Motor
     int m_IN1, m_IN2; // Input Pins
     int m_EN; // Enable Pin
 
-    Motor(int IN1, int IN2, int EN) : m_IN1(IN1), m_IN2(IN2), m_EN(EN) {} // Initializer
+    Motor(int IN1, int IN2, int EN) : m_IN1(IN1), m_IN2(IN2), m_EN(EN) {} // Constructor
 
     void begin() // Initialize motor
     {
